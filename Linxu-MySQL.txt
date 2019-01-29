@@ -1,0 +1,58 @@
+Mysql安装步骤：
+
+官网下载linux对应系统版本的yum存储库
+mysql57-community-release-el6-n.noarch.rpm
+
+下载完后放到linux上
+执行sudo rpm -Uvh mysql57-community-release-el6-n.noarch.rpm
+
+然后linux就有一个mysql的安装目录了
+yum repolist all | grep mysql
+可以查看mysql的各个版本
+
+一般已经会有个默认最新的版本是enable开启状态，如果你想要选择其他版本可以靠下面的命令来关闭，开启不同的版本进行安装
+sudo yum-config-manager --disable mysql57-community
+sudo yum-config-manager --enable mysql56-community
+
+选择完版本后进入安装
+sudo yum install mysql-community-server
+
+
+安装完成后启动即可
+sudo service mysqld start
+
+
+初始化mysql密码
+打开etc/my.cnf 文件下，在末尾加上skip-grant-tables
+或者
+[root@VM_225_102_centos ~]# grep 'temporary password' /var/log/mysqld.log 
+2016-07-08T02:25:46.311098Z 1 [Note] A temporary password is generated for root@localhost: MtPqF0/oN5zo
+打开mysql的log日志可以看到末尾有随机生成的密码 复制过来即可登录
+
+这个使用mysql -u root 就不需要密码就能连接了
+连接进去后通过sql修改密码即可
+
+mysql 5.7 版本 user表中密码字段是authentication_string 而不是以前的password
+update user set authentication_string = password("xxx") where user = root;
+更新完后执行下面的命令刷新即可生效
+flush privileges;
+
+这个时候执行sql的时候会出现让你再次设置密码
+You must reset your password using ALTER USER statement before executing this statement.
+
+可是当你输入set password = password ('');的时候又会出现
+Your password does not satisfy the current policy requirements
+提示说密码格式不对。。。。
+
+5.7版本对初始的密码有默认的要求，这个时候如果你想按照他给定的约束定义密码，就要执行
+set validate_password_length=1;（将password密码的长度限制改为大于1即可）
+set global validate_password_policy=0;（将密码的限制改为0为无限制，）
+这2句sql
+
+这个时候去掉密码的限制后再输入set passwor = password（）；
+就可以修改成功了。
+
+ SHOW VARIABLES LIKE 'validate_password%';这个sql可以看针对密码的约束
+ 
+ 
+ 

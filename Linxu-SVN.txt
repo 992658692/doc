@@ -1,0 +1,66 @@
+SVN:安装包
+wget默认下载到当前目录下。
+wget http://subversion.tigris.org/downloads/subversion-1.6.6.tar.gz
+wget http://subversion.tigris.org/downloads/subversion-deps-1.6.6.tar.gz
+
+依赖：
+ssl证书和gcc编译器 安装。
+yum install openssl
+yum install openssl-devel
+yum -y install gcc
+
+解压：deps默认也解压到svn文件目录中
+tar zxvf subversion-1.6.6.tar.gz
+tar zxvf subversion-deps-1.6.6.tar.gz
+
+进入到subversion目录下执行prefix后面的路径为svn目录路径 根据自己的目录自行 修改
+./configure --prefix=/home/subersion --with-openssl=/usr/include/openssl --without-berkeley-db
+
+make && make install
+
+如果 make install 出现下面错误：
+/home/upload/subversion-1.6.6/subversion/svnversion/.libs/lt-svnversion: error while loading shared libraries: libiconv.so.2: cannot open shared object file: No such file or directory
+make: *** [revision-install] Error 127
+解决办法：
+编辑/etc/ld.so.conf文件
+vi /etc/ld.so.conf
+添加下面一行代码
+/usr/local/lib
+保存后运行ldconfig：
+/sbin/ldconfig
+注：ld.so.conf和ldconfig用于维护系统动态链接库。
+然后再安装
+make && make install
+测试是否安装成功
+
+测试是否成功
+/usr/local/svn/bin/svnserve --version
+svnserve, version 1.6.6 (r40053)
+   compiled Dec 25 2012, 13:14:38
+   
+   
+   
+   
+   
+authz配置
+
+[groups]
+= ,
+其中，1个用户组可以包含1个或多个用户，用户间以逗号分隔。
+版本库目录格式：
+[<版本库>:/项目/目录]
+@<用户组名> = <权限>
+<用户名> = <权限>
+
+devteam = iitshare, itblood #devteam 项目组包括两个用户iitshare,itblood
+[/]
+iitshare = rw #iitshare 对根目录有读写权限
+itblood = #itblood 对根目录没有任何权限
+####如果需要配置tb2c、tb2b2c项目的权限，前提条件是tshop仓库下面需要有这两个项目
+####如果没有的话，tshop都将不能访问
+[tshop:/tb2c] #对tshop仓库的tb2c项目进行权限控制
+@devteam = rw #控制 devteam 组对tb2c项目有读写权限
+itblood = #限制 itblood 所有权限，其它用户有读写权限
+[tshop:/tb2b2c] #对 tshop: 仓库的 tb2b2c 项目进行权限控制
+@devteam = rw #限制 devteam 组对tb2b2c项目有读写权限
+itblood = r #限制 itblood 只有读权限，其它用户有读写权限

@@ -11,3 +11,12 @@ git commit -m "first commit"
 git remote add origin git@github.com:wangjiax9/practice.git 
 //git创建项目之后有个默认的master分支，将本地创建的origin的仓库内容push到 远程的master分支上
 git push -u origin master 
+
+//把git上的项目拷贝到本地
+git clone  git@github.com:wangjiax9/practice.git 
+
+git config --global user.name "xxx"
+git config --global user.email "xxx"
+
+//生成git 公钥
+ssh-keygen -t rsa -C "用户名"

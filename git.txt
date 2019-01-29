@@ -1,0 +1,13 @@
+//把这个目录变成Git可以管理的仓库
+git init
+//文件添加到仓库
+git add README.md 
+//不但可以跟单一文件，还可以跟通配符，更可以跟目录。一个点就把当前目录下所有未追踪的文件全部add了 
+git add . 
+//把文件提交到仓库
+git commit -m "first commit" 
+//关联远程仓库
+//创建一个origin的本地仓库 并关联到git的地址
+git remote add origin git@github.com:wangjiax9/practice.git 
+//git创建项目之后有个默认的master分支，将本地创建的origin的仓库内容push到 远程的master分支上
+git push -u origin master 

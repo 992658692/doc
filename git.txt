@@ -24,3 +24,14 @@ git branch可以看到已经在panda分支上
 git add *
 git commit -m "init panda"
 git push origin panda
+
+
+//把git上的项目拷贝到本地
+git clone  git@github.com:wangjiax9/practice.git 
+
+git config --global user.name "xxx"
+git config --global user.email "xxx"
+
+//生成git 公钥
+ssh-keygen -t rsa -C "用户名"
+

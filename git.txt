@@ -11,3 +11,16 @@ git commit -m "first commit"
 git remote add origin git@github.com:wangjiax9/practice.git 
 //git创建项目之后有个默认的master分支，将本地创建的origin的仓库内容push到 远程的master分支上
 git push -u origin master 
+
+
+
+git 创建分支
+切换到基础分支，如主干
+git checkout master
+创建并切换到新分支
+git checkout -b panda
+git branch可以看到已经在panda分支上
+更新分支代码并提交
+git add *
+git commit -m "init panda"
+git push origin panda

@@ -28,10 +28,16 @@ git push origin panda
 
 //把git上的项目拷贝到本地
 git clone  git@github.com:wangjiax9/practice.git 
-
 git config --global user.name "xxx"
 git config --global user.email "xxx"
 
 //生成git 公钥
 ssh-keygen -t rsa -C "用户名"
 
+git 删除本地分支
+git branch -D branchName
+git 删除远程分支
+git push origin :branchName  (origin 后面有空格)
+
+git更新远程新分支
+git remote update origin --prune

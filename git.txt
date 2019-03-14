@@ -1,4 +1,4 @@
-//把这个目录变成Git可以管理的仓库
+﻿//把这个目录变成Git可以管理的仓库
 git init
 //文件添加到仓库
 git add README.md 
@@ -41,3 +41,22 @@ git push origin :branchName  (origin 后面有空格)
 
 git更新远程新分支
 git remote update origin --prune
+
+
+git stash 命令是储藏命令。 
+
+1. 可以用来储藏工作的中间状态，
+ 
+2. 也可以将储藏好的中间状态应用到现有的工作中。 
+
+主要的命令有 
+
+1. git stash 
+当本地有修改的时候，只要运行git stash 就可以将本地的更改储藏起来。 
+
+2. git stash list 
+可以用来查看储藏起来的状态。如下 
+stash@{0}: WIP on master: ece766d package struct 
+
+3. git stash apply 
+可以用来应用储藏的状态。比如 git stash apply 0 就会应用储藏id为0 的中间状态
